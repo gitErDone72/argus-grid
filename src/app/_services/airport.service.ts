@@ -37,7 +37,7 @@ export class AirportService {
   }
 
   updateAirport(key: string, airport: IAirport): Observable<IAirport>{
-    return this.http.patch(`${environment.apiRoot}/airports/${key}.json`, airport)
+    return this.http.put(`${environment.apiRoot}/airports/${key}.json`, airport)
     .pipe(
       map(retObj => {
         return Object.values(retObj)[0];
