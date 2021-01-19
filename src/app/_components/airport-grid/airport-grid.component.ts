@@ -1,7 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { IAirport } from 'src/app/_models/airport.interface';
-import { IPagination } from 'src/app/_models/pagination';
 import { AirportService } from 'src/app/_services/airport.service';
 
 @Component({
@@ -9,14 +7,14 @@ import { AirportService } from 'src/app/_services/airport.service';
   templateUrl: './airport-grid.component.html',
   styleUrls: ['./airport-grid.component.scss']
 })
-export class AirportGridComponent implements OnInit, OnDestroy {
+export class AirportGridComponent implements OnInit {
 
-  airports: IAirport[] = [];
-  pagination!: IPagination;
-  pageNumber = 1;
-  pageSize = 5;
+  airports!: IAirport[];
+  airportsSlice!: IAirport[];
+  maxSize: number = 3;
+  currentPage: number = 1;
   loading = false;
-  private airportSubscription: Subscription = new Subscription;
+  airportCreatedKey: string = '';
 
   constructor(private airportService: AirportService) { }
 
@@ -24,20 +22,68 @@ export class AirportGridComponent implements OnInit, OnDestroy {
     this.loadAirports();
   }
 
-  ngOnDestroy(): void {
-    this.airportSubscription.unsubscribe();
-  }
-
   loadAirports() {
     this.loading = true;
-    this.airportSubscription = this.airportService.getAllAirports().subscribe(airports => {
-      this.airports = airports;
+    this.airportService.getAllAirports().subscribe(airports => {
+      this.airports = airports.sort((a, b) => {
+        let fa = a.OfficialName.toLowerCase(),
+          fb = b.OfficialName.toLowerCase();
+        if (fa < fb) {
+          return -1;
+        }
+        if (fa > fb) {
+          return 1;
+        }
+        return 0;
+      });
+      this.airportsSlice = airports.slice(0, 10);
+      this.loading = false;
+    });
+  }
+
+  createAirport() {
+    this.loading = true;
+    const newAirport: IAirport = {
+      AirportId: 5000,
+      City: "My New Airport",
+      Lat: 49.666666,
+      Lon: -116.816666,
+      OfficialName: "Aaairport",
+      State: "British Columbia"
+    }
+    this.airportService.createAirport(newAirport).subscribe(airportKey => {
+      this.airportCreatedKey = airportKey;
+      this.loadAirports();
+    })
+  }
+
+  updateAirport() {
+    this.loading = true;
+    const updatedAirport: IAirport = {
+      AirportId: 5000,
+      City: "My New Airport",
+      Lat: 49.666666,
+      Lon: -116.816666,
+      OfficialName: "Aaairport Updated",
+      State: "British Columbia"
+    }
+    this.airportService.updateAirport(this.airportCreatedKey, updatedAirport).subscribe(airport => {
+      this.loadAirports()
+    })
+  }
+
+  deleteAirport() {
+    this.loading = true;
+    this.airportService.deleteAirport(this.airportCreatedKey).subscribe(retVal => {
+      this.loadAirports();
+      this.airportCreatedKey = '';
       this.loading = false;
     });
   }
 
   pageChanged(event: any) {
-    this.pageNumber = event.page;
-    this.loadAirports();
+    const startItem = (event.page - 1) * event.itemsPerPage;
+    const endItem = event.page * event.itemsPerPage;
+    this.airportsSlice = this.airports.slice(startItem, endItem);
   }
 }

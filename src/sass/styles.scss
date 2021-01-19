@@ -21,7 +21,8 @@
 @import
   'layout/header',
   'layout/footer',
-  'layout/main-content';
+  'layout/main-content',
+  'layout/grid';
 
 // 5. Components
 @import
@@ -29,8 +30,7 @@
   'components/menu';
 
 // 6. Page-specific styles
-@import
-  'pages/airport-maint-page';
+
 
 // 7. Themes
 @import

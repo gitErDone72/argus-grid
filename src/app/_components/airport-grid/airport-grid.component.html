@@ -1,20 +1,30 @@
-<div class="grid">
+<div class="grid grid_airport-list">
   <div class="grid__row grid__row_header">
     <div class="grid__col">Name</div>
     <div class="grid__col">City</div>
     <div class="grid__col">State</div>
     <div class="grid__col">Location</div>
   </div>
-  <div class="grid__row" *ngFor="let airport of airports">
-    <div class="grid__col">{{airport.OfficialName}}</div>
-    <div class="grid__col">{{airport.City}}</div>
-    <div class="grid__col">{{airport.State}}</div>
-    <div class="grid__col">{{airport.Lon}}, {{airport.Lat}}</div>
-  </div>
-  <div class="grid__row grid__row_pager">
-    <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
-      [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
-      nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
-    </pagination>
-  </div>
+  <div class="grid__row grid__row_loading" *ngIf="loading else airportsList">Loading...</div>
+  <ng-template #airportsList>
+    <div class="grid__row" *ngFor="let airport of airportsSlice; let even = even; let odd = odd"
+      [ngClass]="{ 'grid__row_odd': odd, 'grid__row_even': even }">
+      <div class="grid__col">{{airport.OfficialName}}</div>
+      <div class="grid__col">{{airport.City}}</div>
+      <div class="grid__col">{{airport.State}}</div>
+      <div class="grid__col">{{airport.Lon}}, {{airport.Lat}}</div>
+    </div>
+    <div class="grid__row grid__row_pager">
+      <pagination [boundaryLinks]="true" [totalItems]="airports.length" [rotate]="true"
+        (pageChanged)="pageChanged($event)" [maxSize]="maxSize" previousText="&lsaquo;" nextText="&rsaquo;"
+        firstText="&laquo;" lastText="&raquo;">
+      </pagination>
+    </div>
+    <div class="grid__row grid__row_buttons">
+      <button class="button" (click)="loadAirports()">Retrieve Data</button>
+      <button class="button" (click)="createAirport()">Add Data</button>
+      <button class="button" [disabled]="airportCreatedKey === ''" (click)="updateAirport()">Edit Data</button>
+      <button class="button" [disabled]="airportCreatedKey === ''" (click)="deleteAirport()">Delete Data</button>
+    </div>
+  </ng-template>
 </div>

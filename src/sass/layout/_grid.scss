@@ -1,0 +1,80 @@
+.grid {
+  &_airport-list {
+    width: 1438px;
+    margin: 0 auto;
+    .grid__col {
+      width: 25%;
+      border: 1px solid $color-main-grey;
+      border-top: none;
+      &:not(:first-of-type) {
+        border-left: none;
+      }
+    }
+  }
+  &__row {
+    height: 4rem;
+    display: flex;
+    &_loading{
+        height:50rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    &_header {
+      border-top: 1px solid $color-main-grey;
+      background-color: $color-primary;
+      height: 6.6rem;
+      .grid__col {
+        color: white;
+        align-items: flex-end;
+        font-size: 2.4rem;
+        padding-bottom: 1rem;
+      }
+    }
+    &_pager {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 6.5rem;
+      border: 1px solid $color-main-grey;
+      border-top: none;
+      ul.pagination {
+        margin-bottom: auto;
+        a.page-link {
+          font-size: 2.4rem;
+          border: none;
+          &:hover {
+            color: inherit;
+          }
+        }
+        li.active a.page-link {
+          background-color: $color-primary;
+          &:hover {
+            color: white;
+          }
+        }
+      }
+    }
+    &_buttons {
+      margin: 7rem 0;
+    }
+    &_odd {
+      background-color: white;
+    }
+    &_even {
+      background-color: #7b787821;
+    }
+    &_buttons {
+      justify-content: space-evenly;
+    }
+  }
+  &__col {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    padding-left: 1.5rem;
+    color: #707070;
+    font-size: 1.8rem;
+    line-height: 2.4rem;
+  }
+}

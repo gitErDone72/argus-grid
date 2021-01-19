@@ -6,23 +6,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 4.5rem;
-  line-height: 1.7rem;
-  font: $font-title;
-  font-size: 1.5rem;
-  background-color: red;
+  height: 6rem;
+  font-size: 2.4rem;
+  width: 20.3rem;
+  background-color: $color-primary;
+  border: 1px solid $color-main-grey;
   border-radius: 0.4rem;
   color: white;
-  text-transform: uppercase;
   cursor: pointer;
-  &_color {
-    &_dark {
-      color: white;
-      background-color: red;
-    }
-    &_red{
-      color: white;
-      background-color: green;
-    }
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
   }
 }

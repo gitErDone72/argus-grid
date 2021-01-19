@@ -4,18 +4,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { AirportMaintComponent } from './_pages/airport-maint/airport-maint.component';
 import { AirportGridComponent } from './_components/airport-grid/airport-grid.component';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 
 import { PaginationModule } from 'node_modules/ngx-bootstrap/pagination';
 import { FormsModule } from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AirportMaintComponent,
     AirportGridComponent
   ],
   imports: [
@@ -23,7 +23,11 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    PaginationModule.forRoot()
+    PaginationModule.forRoot(),
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right'
+    }),
+    NgxSpinnerModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
