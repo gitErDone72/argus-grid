@@ -1,0 +1,28 @@
+// -----------------------------------------------------------------------------
+// This file contains all styles related to the button component.
+// -----------------------------------------------------------------------------
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 4.5rem;
+  line-height: 1.7rem;
+  font: $font-title;
+  font-size: 1.5rem;
+  background-color: red;
+  border-radius: 0.4rem;
+  color: white;
+  text-transform: uppercase;
+  cursor: pointer;
+  &_color {
+    &_dark {
+      color: white;
+      background-color: red;
+    }
+    &_red{
+      color: white;
+      background-color: green;
+    }
+  }
+}

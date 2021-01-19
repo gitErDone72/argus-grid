@@ -1,0 +1,20 @@
+<div class="grid">
+  <div class="grid__row grid__row_header">
+    <div class="grid__col">Name</div>
+    <div class="grid__col">City</div>
+    <div class="grid__col">State</div>
+    <div class="grid__col">Location</div>
+  </div>
+  <div class="grid__row" *ngFor="let airport of airports">
+    <div class="grid__col">{{airport.OfficialName}}</div>
+    <div class="grid__col">{{airport.City}}</div>
+    <div class="grid__col">{{airport.State}}</div>
+    <div class="grid__col">{{airport.Lon}}, {{airport.Lat}}</div>
+  </div>
+  <div class="grid__row grid__row_pager">
+    <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
+      [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+      nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+    </pagination>
+  </div>
+</div>
