@@ -29,11 +29,11 @@ export class AirportService {
   }
 
   createAirport(airport: IAirport): Observable<string> {
-    return this.http.post(`${environment.apiRoot}/airports.json`, airport)
+    return this.http.post<{name:string}>(`${environment.apiRoot}/airports.json`, airport)
     .pipe(
       map(retObj => {
-        return Object.values(retObj)[0]["name"];
-      }));
+        return retObj.name;
+      }));      
   }
 
   updateAirport(key: string, airport: IAirport): Observable<IAirport>{

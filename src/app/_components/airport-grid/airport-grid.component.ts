@@ -26,13 +26,15 @@ export class AirportGridComponent implements OnInit {
     this.loading = true;
     this.airportService.getAllAirports().subscribe(airports => {
       this.airports = airports.sort((a, b) => {
-        let fa = a.OfficialName.toLowerCase(),
-          fb = b.OfficialName.toLowerCase();
-        if (fa < fb) {
-          return -1;
-        }
-        if (fa > fb) {
-          return 1;
+        if (a !== null && b !== null) {
+          let fa = a.OfficialName.toLowerCase(),
+            fb = b.OfficialName.toLowerCase();
+          if (fa < fb) {
+            return -1;
+          }
+          if (fa > fb) {
+            return 1;
+          }
         }
         return 0;
       });
@@ -74,7 +76,7 @@ export class AirportGridComponent implements OnInit {
 
   deleteAirport() {
     this.loading = true;
-    this.airportService.deleteAirport(this.airportCreatedKey).subscribe(retVal => {
+    this.airportService.deleteAirport(this.airportCreatedKey).subscribe(() => {
       this.loadAirports();
       this.airportCreatedKey = '';
       this.loading = false;
