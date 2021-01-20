@@ -38,7 +38,7 @@ export class AirportGridComponent implements OnInit {
         }
         return 0;
       });
-      this.airportsSlice = airports.slice(0, 10);
+      this.airportsSlice = this.airports.slice(0, 10);
       this.loading = false;
     });
   }
