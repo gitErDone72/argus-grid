@@ -26,7 +26,7 @@ export class AirportGridComponent implements OnInit {
     this.loading = true;
     this.airportService.getAllAirports().subscribe(airports => {
       this.airports = airports.sort((a, b) => {
-        if (a !== null || b !== null) {
+        if (a !== null && b !== null) {
           let fa = a.OfficialName.toLowerCase(),
             fb = b.OfficialName.toLowerCase();
           if (fa < fb) {
